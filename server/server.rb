@@ -77,6 +77,21 @@ class Server
     file = File.open(path, "rb")
     client.puts file.read
   end
+
+  def u_take(client, args)
+    return send_400 client unless args.size == 1
+    file_name = args.first
+    client.puts(200)
+    file_contents = read(client)
+    begin
+      File.open('store/' + file_name, 'w') do |file|
+        file.puts(file_contents)
+      end
+      client.puts(200)
+    rescue
+      client.puts(500)
+    end
+  end
 end
 
 Server.new.start
