@@ -33,9 +33,9 @@ def handle_response(socket, command, args)
     return puts "#{response_code} #{socket.gets}"
   end
   file_path = args.first
-  print "What directory would you like to store '#{file_path}' (default: default/): "
+  print "What directory would you like to store '#{file_path}' (default: received/): "
   directory = gets.chomp
-  directory = "default" if directory.empty?
+  directory = 'received' if directory.empty?
   File.open(directory + '/' + file_path, 'w') do |file|
     while line = socket.gets # Read lines from socket
       file.puts(line)
